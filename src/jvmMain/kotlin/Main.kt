@@ -42,5 +42,5 @@ fun main() = application {
 
 //imprime un numero aleatorio cada vez que pulsas el botón
 fun aleatorio():Int{
-    return (0..10).random()
+    return (1..37).random()
 }
