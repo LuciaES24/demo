@@ -160,6 +160,7 @@ fun App7(){
                         "*"->total=numeroAnterior.toInt()*numeroActual.toInt()
                     }
                     pantalla=total.toString()
+                    numeroActual=total.toString()
                 }){
                     Text("=")
                 }
