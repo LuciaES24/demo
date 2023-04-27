@@ -26,7 +26,7 @@ fun main() = application {
 fun App7(){
     var text by remember { mutableStateOf("") }
     var numeroActual=""
-    var numeroNuevo=""
+    var numeroAnterior=""
     var operacion = ""
     var total = 0
     var pantalla by remember { mutableStateOf("") }
@@ -65,7 +65,9 @@ fun App7(){
                 }
                 Button(onClick = {
                     pantalla="+"
-                    operacion=numeroActual+"+"
+                    operacion="+"
+                    numeroAnterior = numeroActual
+                    numeroActual=""
                 }){
                     Text("+")
                 }
@@ -94,6 +96,9 @@ fun App7(){
                 }
                 Button(onClick = {
                     pantalla="-"
+                    operacion="-"
+                    numeroAnterior = numeroActual
+                    numeroActual=""
                 }){
                     Text("-")
                 }
@@ -121,9 +126,12 @@ fun App7(){
                     Text("9")
                 }
                 Button(onClick = {
-                    pantalla="x"
+                    pantalla="*"
+                    operacion="*"
+                    numeroAnterior = numeroActual
+                    numeroActual=""
                 }){
-                    Text("x")
+                    Text("*")
                 }
             }
             Row (
@@ -133,7 +141,7 @@ fun App7(){
                 Button(onClick = {
                     pantalla=""
                     numeroActual=""
-                    numeroNuevo=""
+                    numeroAnterior=""
                     operacion=""
                 }){
                     Text("DEL")
@@ -145,12 +153,21 @@ fun App7(){
                     Text("0")
                 }
                 Button(onClick = {
-                    pantalla=operacion.toString()
+                    when(operacion){
+                        "/"->total=numeroAnterior.toInt()/numeroActual.toInt()
+                        "+"->total=numeroAnterior.toInt()+numeroActual.toInt()
+                        "-"->total=numeroAnterior.toInt()-numeroActual.toInt()
+                        "*"->total=numeroAnterior.toInt()*numeroActual.toInt()
+                    }
+                    pantalla=total.toString()
                 }){
                     Text("=")
                 }
                 Button(onClick = {
                     pantalla="/"
+                    operacion="/"
+                    numeroAnterior = numeroActual
+                    numeroActual=""
                 }){
                     Text("/")
                 }
