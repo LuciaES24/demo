@@ -27,7 +27,8 @@ fun App7(){
     var text by remember { mutableStateOf("") }
     var numeroActual=""
     var numeroNuevo=""
-    var operacion = 0
+    var operacion = ""
+    var total = 0
     var pantalla by remember { mutableStateOf("") }
     MaterialTheme {
         Column (
@@ -64,7 +65,7 @@ fun App7(){
                 }
                 Button(onClick = {
                     pantalla="+"
-                    operacion=numeroActual.toInt()+numeroNuevo.toInt()
+                    operacion=numeroActual+"+"
                 }){
                     Text("+")
                 }
@@ -133,7 +134,7 @@ fun App7(){
                     pantalla=""
                     numeroActual=""
                     numeroNuevo=""
-                    operacion=0
+                    operacion=""
                 }){
                     Text("DEL")
                 }
