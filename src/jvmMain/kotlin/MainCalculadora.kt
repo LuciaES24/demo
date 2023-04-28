@@ -33,7 +33,7 @@ fun App7(){
     MaterialTheme {
         Column (
             modifier = Modifier
-                .padding(16.dp)
+                .padding(10.dp)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -41,10 +41,10 @@ fun App7(){
             OutlinedTextField(
                 value = pantalla,
                 onValueChange = { pantalla = it },
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
             )
-            Row (
-            ){
+            Row {
                 Button(onClick = {
                     pantalla="^2"
                     operacion="^2"
@@ -75,8 +75,7 @@ fun App7(){
                     Text("√")
                 }
             }
-            Row (
-            ){
+            Row {
                 Button(onClick = {
                     numeroActual+="1"
                     pantalla = numeroActual
@@ -127,10 +126,16 @@ fun App7(){
                     Text("6")
                 }
                 Button(onClick = {
-                    pantalla="-"
-                    operacion="-"
-                    numeroAnterior = numeroActual
-                    numeroActual=""
+                    if (numeroActual==""){
+                        numeroActual+="-"
+                    }else if (numeroAnterior==""){
+                        numeroAnterior+=""
+                    }else{
+                        pantalla="-"
+                        operacion="-"
+                        numeroAnterior = numeroActual
+                        numeroActual=""
+                    }
                 }){
                     Text("-")
                 }
