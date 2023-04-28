@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import kotlin.math.sqrt
 
 fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
@@ -24,11 +25,10 @@ fun main() = application {
 @Composable
 @Preview
 fun App7(){
-    var text by remember { mutableStateOf("") }
     var numeroActual=""
     var numeroAnterior=""
     var operacion = ""
-    var total = 0
+    var total = 0.0
     var pantalla by remember { mutableStateOf("") }
     MaterialTheme {
         Column (
@@ -43,6 +43,38 @@ fun App7(){
                 onValueChange = { pantalla = it },
                 modifier = Modifier.padding(bottom = 16.dp)
             )
+            Row (
+            ){
+                Button(onClick = {
+                    pantalla="^2"
+                    operacion="^2"
+                }){
+                    Text("^2")
+                }
+                Button(onClick = {
+                    pantalla="^x"
+                    operacion="^x"
+                    numeroAnterior = numeroActual
+                    numeroActual=""
+                }){
+                    Text("^x")
+                }
+                Button(onClick = {
+                    pantalla="%"
+                    operacion="%"
+                    numeroAnterior = numeroActual
+                    numeroActual=""
+                }){
+                    Text("%")
+                }
+                Button(onClick = {
+                    pantalla="√"
+                    operacion="√"
+                    numeroAnterior=numeroActual
+                }){
+                    Text("√")
+                }
+            }
             Row (
             ){
                 Button(onClick = {
@@ -126,12 +158,12 @@ fun App7(){
                     Text("9")
                 }
                 Button(onClick = {
-                    pantalla="*"
-                    operacion="*"
+                    pantalla="x"
+                    operacion="x"
                     numeroAnterior = numeroActual
                     numeroActual=""
                 }){
-                    Text("*")
+                    Text("x")
                 }
             }
             Row (
@@ -144,7 +176,7 @@ fun App7(){
                     numeroAnterior=""
                     operacion=""
                 }){
-                    Text("DEL")
+                    Text("C")
                 }
                 Button(onClick = {
                     numeroActual+="0"
@@ -154,10 +186,23 @@ fun App7(){
                 }
                 Button(onClick = {
                     when(operacion){
-                        "/"->total=numeroAnterior.toInt()/numeroActual.toInt()
-                        "+"->total=numeroAnterior.toInt()+numeroActual.toInt()
-                        "-"->total=numeroAnterior.toInt()-numeroActual.toInt()
-                        "*"->total=numeroAnterior.toInt()*numeroActual.toInt()
+                        "/"->total=numeroAnterior.toDouble()/numeroActual.toDouble()
+                        "+"->total=numeroAnterior.toDouble()+numeroActual.toDouble()
+                        "-"->total=numeroAnterior.toDouble()-numeroActual.toDouble()
+                        "x"->total=numeroAnterior.toDouble()*numeroActual.toDouble()
+                        "^2"->total=numeroActual.toDouble()*numeroActual.toDouble()
+                        "^x"->{
+                            val numero = numeroAnterior
+                            for (i in 1..numeroActual.toInt()-1){
+                                total=numeroAnterior.toDouble()*numero.toDouble()
+                                numeroAnterior=total.toString()
+                            }
+                        }
+                        "%"->total=numeroAnterior.toDouble()*numeroActual.toDouble()/100
+                        "√"-> {
+                            numeroActual = numeroActual + ".00"
+                            total= sqrt(numeroAnterior.toDouble())
+                        }
                     }
                     pantalla=total.toString()
                     numeroActual=total.toString()
