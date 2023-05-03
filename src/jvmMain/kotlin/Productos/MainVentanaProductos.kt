@@ -27,14 +27,14 @@ fun App8(){
     val tipos = listOf("TV", "MP3Player", "Camera", "Book")
     var tipoP by remember { mutableStateOf("") }
     var prec by remember { mutableStateOf("") }
-    var code by remember { mutableStateOf("") }
+    var size by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
+    var color by remember { mutableStateOf("") }
+    var publisher by remember { mutableStateOf("") }
+    var anio by remember { mutableStateOf("") }
     var situacion by remember { mutableStateOf("true") }
     val almacen = Almacen()
-    var tipoMostrar by remember { mutableStateOf("") }
-    var precioMostrar by remember { mutableStateOf("") }
-    var codeMostrar by remember { mutableStateOf("") }
-    var nameMostrar by remember { mutableStateOf("") }
+
 
     MaterialTheme {
         Column (
@@ -47,22 +47,80 @@ fun App8(){
             DropdownMenu(
                 expanded = true,
                 onDismissRequest = {},
-                offset = DpOffset(50.dp,250.dp),
-                modifier = Modifier.width(192.dp)
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxSize()
             ){
-                tipos.forEach{
-                    DropdownMenuItem(onClick = {
-                        
-                }){
-
+                tipos.forEach{tipoP->
+                    DropdownMenuItem( onClick = {
+                        if (tipoP == "TV"){
+                            Column {
+                                TextField(
+                                    value = prec,
+                                    onValueChange = {prec=it},
+                                )
+                                TextField(
+                                    value = name,
+                                    onValueChange = {name=it}
+                                )
+                                TextField(
+                                    value = size,
+                                    onValueChange = {size=it}
+                                )
+                            }
+                        }else if(tipoP=="Camera"){
+                            Column {
+                                TextField(
+                                    value = prec,
+                                    onValueChange = { prec = it },
+                                )
+                                TextField(
+                                    value = name,
+                                    onValueChange = { name = it }
+                                )
+                            }
+                        }else if(tipoP=="MP3Player"){
+                            Column {
+                                TextField(
+                                    value = prec,
+                                    onValueChange = { prec = it },
+                                )
+                                TextField(
+                                    value = name,
+                                    onValueChange = { name = it }
+                                )
+                                TextField(
+                                    value = color,
+                                    onValueChange = { color = it }
+                                )
+                            }
+                        }
+                        else if(tipoP=="Book"){
+                            Column {
+                                TextField(
+                                    value = prec,
+                                    onValueChange = { prec = it },
+                                )
+                                TextField(
+                                    value = publisher,
+                                    onValueChange = { publisher = it }
+                                )
+                                TextField(
+                                    value = anio,
+                                    onValueChange = { anio = it }
+                                )
+                            }
+                        }
+                    }){
+                        Text(text = tipoP)
                     } }
             }
             Row {
                 Button(onClick = {
-                    val producto = Producto(tipoP,code.toInt(),name,prec.toDouble())
+                    val producto = Producto(tipoP,size.toInt(),name,prec.toDouble())
                     almacen.anadir(producto)
                     tipoP=""
-                    code=""
+                    size=""
                     name=""
                     prec=""
                 }){
@@ -73,7 +131,7 @@ fun App8(){
                         tipoP=producto.tipoProducto
                         prec=producto.precio.toString()
                         name=producto.nombre
-                        code=producto.codigo.toString()
+                        size=producto.codigo.toString()
                     }
                 }){
                     Text("Mostrar")
